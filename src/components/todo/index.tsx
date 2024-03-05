@@ -1,58 +1,79 @@
-import React, { useState } from "react";
-import { addTask, removeTask } from "@states/todo/slices/todoSlice";
-import { useAppDispatch, useAppSelector } from "@hooks/state";
-import {
-  Button,
-  HStack,
-  Input,
-  List,
-  ListItem,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import React from "react";
+
+import { Button, HStack, VStack, Text } from "@chakra-ui/react";
 import { Fade } from "react-awesome-reveal";
+import TodoList from "@components/todo/components/todo-list";
+import { useStoreCrudOperations } from "@components/todo/hooks/useStoreCrudOperations";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createInputList } from "@components/form";
+import { z } from "zod";
+import TodoFilters from "@components/todo/components/filters";
+import TodoCounter from "@components/todo/components/counter";
 
+const InputSchema = z.object({
+  task: z
+    .string()
+    .min(3, { message: "Minimum 3 symbols " })
+    .max(10, { message: "Maximum 10 symbols" }),
+});
+
+const { FormInput } = createInputList<InputType>();
+
+export type InputType = z.infer<typeof InputSchema>;
 export default function TodoComponent() {
-  const [text, setText] = useState("");
-  const todos = useAppSelector((state) => state.todo); // Corrected usage of useSelector
-  const dispatch = useAppDispatch();
+  const { handleAddTodo } = useStoreCrudOperations();
 
-  console.log(todos);
+  const methods = useForm<InputType>({
+    resolver: zodResolver(InputSchema),
+    defaultValues: {
+      task: "",
+    },
+  });
 
-  const handleAddTodo = () => {
-    if (text) {
-      dispatch(addTask(text)); // Use the text entered by the user
-      setText("");
-    }
-  };
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = methods;
 
-  const handleDeleteTask = (id: string) => {
-    if (id) {
-      dispatch(removeTask(id));
-    }
+  const onSubmit: SubmitHandler<InputType> = async (data) => {
+    handleAddTodo(data.task);
+    reset();
   };
 
   return (
-    <VStack>
-      <HStack>
-        <Fade direction="left">
-          <Input
-            type="text"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-          />
-        </Fade>
-        <Fade direction="right">
-          <Button onClick={handleAddTodo}>Add</Button>
-        </Fade>
-      </HStack>
-      <List>
-        {todos.map((todo, index) => (
-          <ListItem onClick={() => handleDeleteTask(String(todo?.id))}>
-            <Text>{`${index + 1}. ${todo.text}`}</Text>
-          </ListItem>
-        ))}
-      </List>
+    <VStack h={500}>
+      <VStack mb={12}>
+        <TodoFilters />
+        <TodoCounter />
+      </VStack>
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <HStack>
+            <Fade direction="left">
+              <VStack pos="relative">
+                <Text
+                  color="red"
+                  fontSize="12px"
+                  textAlign="start"
+                  w="full"
+                  pos="absolute"
+                  top={-6}
+                >
+                  {errors.task?.message}
+                </Text>
+                <FormInput name="task" control={control} />
+              </VStack>
+            </Fade>
+            <Fade direction="right">
+              <Button type="submit">Add</Button>
+            </Fade>
+          </HStack>
+          <TodoList />
+        </form>
+      </FormProvider>
     </VStack>
   );
 }

@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { FilterEnum } from "@components/todo/components/filters";
 
 export type Todo = {
   id: number;
@@ -6,7 +7,15 @@ export type Todo = {
   completed: boolean;
 };
 
-const initialState: Todo[] = [];
+interface TodoState {
+  todos: Todo[];
+  filter: FilterEnum;
+}
+
+const initialState: TodoState = {
+  todos: [],
+  filter: FilterEnum.ALL,
+};
 
 const todoSlice = createSlice({
   name: "todoList",
@@ -18,13 +27,24 @@ const todoSlice = createSlice({
         text: action.payload,
         completed: false,
       };
-      return [...state, newTodo];
+      state.todos.push(newTodo);
     },
-    removeTask: (state, action: PayloadAction<string>) => {
-      return state.filter((item) => item.id !== Number(action.payload));
+    removeTask: (state, action: PayloadAction<number>) => {
+      state.todos = state.todos.filter((item) => item.id !== action.payload);
+    },
+    completeTask: (state, action: PayloadAction<number>) => {
+      state.todos = state.todos.map((item) =>
+        item.id === action.payload
+          ? { ...item, completed: !item.completed }
+          : item,
+      );
+    },
+    setFilter: (state, action: PayloadAction<FilterEnum>) => {
+      state.filter = action.payload;
     },
   },
 });
 
-export const { addTask, removeTask } = todoSlice.actions;
+export const { addTask, removeTask, completeTask, setFilter } =
+  todoSlice.actions;
 export default todoSlice.reducer;

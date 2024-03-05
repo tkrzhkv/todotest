@@ -1,14 +1,16 @@
-import { Heading, VStack } from "@chakra-ui/react";
+import { Heading, Stack, VStack } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { Zoom } from "react-awesome-reveal";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <VStack>
-      <Zoom direction="up">
-        <Heading>Todo list</Heading>
+    <VStack alignItems="center" justifyContent="center" h="100vh">
+      <Zoom duration={1500}>
+        <Heading fontSize={24} mb={6}>
+          Write your task
+        </Heading>
       </Zoom>
-      {children}
+      <Stack>{children}</Stack>
     </VStack>
   );
 }
