@@ -4,54 +4,68 @@ import {
   removeTask,
   setFilter,
   Todo,
-} from "@states/todo/slices/todoSlice";
-import { useAppDispatch, useAppSelector } from "@hooks/state";
-import { useDisclosure } from "@chakra-ui/react";
-import { FilterEnum } from "@components/todo/components/filters";
-import { useEffect, useState } from "react";
+} from "@states/todo/slices/todoSlice"
+import { useAppDispatch, useAppSelector } from "@hooks/state"
+import { useDisclosure } from "@chakra-ui/react"
+import { useEffect, useState } from "react"
+import {FilterEnum} from "@constants/filterEnum"
 
-export const useStoreCrudOperations = () => {
-  const todos = useAppSelector((state) => state.todo.todos);
-  const filter = useAppSelector((state) => state.todo.filter);
-  const dispatch = useAppDispatch();
-  const { onToggle } = useDisclosure();
+interface StoreCrudOperations {
+  handleAddTodo: (text: string) => void
+  handleDeleteTask: (id: number) => void
+  handleCompleteTask: (id: number) => void
+  handleFilterChange: (filter: FilterEnum) => void
+  filteredTodos: Todo[]
+  filter: FilterEnum
+  todos: Todo[]
+  completedCount: number
+  uncompletedCount: number
+}
 
-  const handleAddTodo = (text: string) => {
+export const useStoreCrudOperations = (): StoreCrudOperations => {
+  const todos = useAppSelector((state) => state.todo.todos)
+  const filter = useAppSelector((state) => state.todo.filter)
+  const dispatch = useAppDispatch()
+  const { onToggle } = useDisclosure()
+
+  const handleAddTodo = (text: string): void => {
     if (text) {
-      dispatch(addTask(text));
+      dispatch(addTask(text))
     }
-  };
-  const handleDeleteTask = (id: number) => {
-    onToggle();
+  }
+
+  const handleDeleteTask = (id: number): void => {
+    onToggle()
     if (id) {
-      dispatch(removeTask(id));
+      dispatch(removeTask(id))
     }
-  };
+  }
 
-  const handleCompleteTask = (id: number) => {
+  const handleCompleteTask = (id: number): void => {
     if (id) {
-      dispatch(completeTask(id));
+      dispatch(completeTask(id))
     }
-  };
+  }
 
-  const handleFilterChange = (filter: FilterEnum) => {
-    dispatch(setFilter(filter));
-  };
+  const handleFilterChange = (filter: FilterEnum): void => {
+    dispatch(setFilter(filter))
+  }
 
-  const [filteredTodos, setFilteredTodos] = useState<Todo[]>(todos);
+
+  const [filteredTodos, setFilteredTodos] = useState<Todo[]>(todos)
 
   useEffect(() => {
     if (filter === FilterEnum.COMPLETED) {
-      setFilteredTodos(todos.filter((todo) => todo.completed));
+      setFilteredTodos(todos.filter((todo) => todo.completed))
     } else if (filter === FilterEnum.CURRENT) {
-      setFilteredTodos(todos.filter((todo) => !todo.completed));
+      setFilteredTodos(todos.filter((todo) => !todo.completed))
     } else {
-      setFilteredTodos(todos);
+      setFilteredTodos(todos)
     }
-  }, [todos, filter]);
+  }, [todos, filter])
 
-  const completedCount = todos.filter((todo) => todo.completed).length;
-  const uncompletedCount = todos.length - completedCount;
+  const completedCount = todos.filter((todo) => todo.completed).length
+  const uncompletedCount = todos.length - completedCount
 
   return {
     handleAddTodo,
@@ -63,5 +77,5 @@ export const useStoreCrudOperations = () => {
     todos,
     completedCount,
     uncompletedCount,
-  };
-};
+  }
+}

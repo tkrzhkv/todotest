@@ -1,8 +1,8 @@
-import { inputAnatomy } from "@chakra-ui/anatomy";
-import { createMultiStyleConfigHelpers } from "@chakra-ui/react";
+import { inputAnatomy } from "@chakra-ui/anatomy"
+import { createMultiStyleConfigHelpers } from "@chakra-ui/react"
 
 const { definePartsStyle, defineMultiStyleConfig } =
-  createMultiStyleConfigHelpers(inputAnatomy.keys);
+  createMultiStyleConfigHelpers(inputAnatomy.keys)
 
 const variantPrimary = definePartsStyle({
   field: {
@@ -15,10 +15,10 @@ const variantPrimary = definePartsStyle({
     w: "full",
     h: "40px",
   },
-});
+})
 
 const variants = {
   primary: variantPrimary,
-};
+}
 
-export const Input = defineMultiStyleConfig({ variants });
+export const Input = defineMultiStyleConfig({ variants })

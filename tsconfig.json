@@ -22,6 +22,7 @@
       "@states/*": ["./states/*"],
       "@config/*": ["./config/*"],
       "@hooks/*": ["./hooks/*"],
+      "@constants/*": ["./constants/*"],
       "@theme/*": ["./theme/*"],
       "@types/*": ["./types/*"],
       "@ioc/*": ["./ioc/*"],

@@ -1,9 +1,9 @@
-import { Text, VStack } from "@chakra-ui/react";
-import React from "react";
-import { useStoreCrudOperations } from "@components/todo/hooks/useStoreCrudOperations";
+import { Text, VStack } from "@chakra-ui/react"
+import React from "react"
+import { useStoreCrudOperations } from "@components/todo/hooks/useStoreCrudOperations"
 
-export default function TodoCounter() {
-  const { completedCount, uncompletedCount } = useStoreCrudOperations();
+export default function TodoCounter():JSX.Element {
+  const { completedCount, uncompletedCount } = useStoreCrudOperations()
 
   return (
     <VStack w="full" alignItems="start">
@@ -18,5 +18,5 @@ export default function TodoCounter() {
         color="blue.300"
       >{`Uncompleted tasks: ${uncompletedCount}`}</Text>
     </VStack>
-  );
+  )
 }

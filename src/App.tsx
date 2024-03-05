@@ -1,12 +1,13 @@
-import RootLayout from "@components/root-layout";
-import TodoComponent from "@components/todo";
+import RootLayout from "@components/root-layout"
+import { FC } from "react"
+import { TodoComponent } from "@components/todo"
 
-function App() {
+const App: FC = () => {
   return (
     <RootLayout>
       <TodoComponent />
     </RootLayout>
-  );
+  )
 }
 
-export default App;
+export default App

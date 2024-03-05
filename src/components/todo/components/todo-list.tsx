@@ -1,15 +1,15 @@
-import { Button, HStack, List, ListItem, Text } from "@chakra-ui/react";
-import { Fade } from "react-awesome-reveal";
-import React from "react";
-import { MdDeleteOutline } from "react-icons/md";
-import { useStoreCrudOperations } from "@components/todo/hooks/useStoreCrudOperations";
-import { Todo } from "@states/todo/slices/todoSlice";
+import { Button, HStack, List, ListItem, Text } from "@chakra-ui/react"
+import { Fade } from "react-awesome-reveal"
+import React from "react"
+import { MdDeleteOutline } from "react-icons/md"
+import { useStoreCrudOperations } from "@components/todo/hooks/useStoreCrudOperations"
+import { Todo } from "@states/todo/slices/todoSlice"
 
-export default function TodoList() {
+const TodoList: React.FC = (): JSX.Element => {
   const { filteredTodos, handleCompleteTask, handleDeleteTask } =
-    useStoreCrudOperations();
+      useStoreCrudOperations()
 
-  const renderListItem = (todo: Todo, index: number) => {
+  const renderListItem = (todo: Todo, index: number): JSX.Element => {
     return (
       <HStack
         justify="space-between"
@@ -29,12 +29,12 @@ export default function TodoList() {
           <MdDeleteOutline color="red" />
         </Button>
       </HStack>
-    );
-  };
+    )
+  }
 
   return (
     <List variant="primary" w="full" h="500px">
-      {filteredTodos.map((todo, index) => (
+      {filteredTodos.map((todo, index) =>
         <Fade cascade key={`${todo}${index}`}>
           <ListItem
             border="1px solid #edf2f7"
@@ -47,7 +47,9 @@ export default function TodoList() {
             {renderListItem(todo, index)}
           </ListItem>
         </Fade>
-      ))}
+      )}
     </List>
-  );
+  )
 }
+
+export default TodoList

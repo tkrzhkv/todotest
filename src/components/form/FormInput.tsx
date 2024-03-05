@@ -3,28 +3,23 @@ import {
   FieldPath,
   FieldValues,
   useController,
-} from "react-hook-form";
-import { Input } from "@chakra-ui/react";
+} from "react-hook-form"
+import { Input } from "@chakra-ui/react"
 
-export type InputFormProps<
-  TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+export type InputFormProps<TFieldValuesType extends FieldValues = FieldValues, TNameType extends FieldPath<TFieldValuesType> = FieldPath<TFieldValuesType>,
 > = {
-  name: TName;
-  control: Control<TFieldValues>;
-  type?: string;
-  placeholder?: string;
-};
+  name: TNameType
+  control: Control<TFieldValuesType>
+  type?: string
+  placeholder?: string
+}
 
-export const FormInput = <
-  TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
->(
-  props: InputFormProps<TFieldValues, TName>,
-) => {
-  const { control, name, type, placeholder } = props;
+export const FormInput = <TFieldValuesType extends FieldValues = FieldValues, TNameType extends FieldPath<TFieldValuesType> = FieldPath<TFieldValuesType>,
+>(props: InputFormProps<TFieldValuesType, TNameType>,
+): JSX.Element => {
+  const { control, name, type, placeholder } = props
 
-  const { field } = useController({ name, control });
+  const { field } = useController({ name, control })
 
   return (
     <Input
@@ -33,5 +28,5 @@ export const FormInput = <
       type={type ?? "text"}
       placeholder={placeholder}
     />
-  );
-};
+  )
+}
