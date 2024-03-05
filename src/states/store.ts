@@ -1,6 +1,5 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit"
-import todoSlice from "@states/todo/slices/todoSlice"
-import storage from "redux-persist/lib/storage"
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import storage from 'redux-persist/lib/storage'
 import {
   FLUSH,
   PAUSE,
@@ -10,27 +9,27 @@ import {
   REHYDRATE,
   persistReducer,
   persistStore,
-} from "redux-persist"
+} from 'redux-persist'
+import todoSlice from '@states/todo/slices/todo-slice'
 
 const rootReducer = combineReducers({
-  todo: todoSlice,
+  'todo': todoSlice,
 })
 
 const persistConfig = {
-  key: "root",
+  'key': 'root',
   storage,
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export const store = configureStore({
-  reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
+  'reducer': persistedReducer,
+  'middleware': (getDefaultMiddleware) => getDefaultMiddleware({
+    'serializableCheck': {
+      'ignoredActions': [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    },
+  }),
 })
 
 export const persistor = persistStore(store)

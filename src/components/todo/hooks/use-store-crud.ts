@@ -1,14 +1,10 @@
-import {
-  addTask,
-  completeTask,
-  removeTask,
-  setFilter,
-  Todo,
-} from "@states/todo/slices/todoSlice"
-import { useAppDispatch, useAppSelector } from "@hooks/state"
-import { useDisclosure } from "@chakra-ui/react"
-import { useEffect, useState } from "react"
-import {FilterEnum} from "@constants/filterEnum"
+import { useAppDispatch, useAppSelector } from '@hooks/state'
+import { useDisclosure } from '@chakra-ui/react'
+import { useEffect, useState } from 'react'
+import { FilterEnum } from '@constants/filter-enum'
+import { addTask, completeTask, removeTask, setFilter }
+  from '@states/todo/slices/todo-slice'
+import { Todo } from 'types/todo'
 
 interface StoreCrudOperations {
   handleAddTodo: (text: string) => void
@@ -22,7 +18,7 @@ interface StoreCrudOperations {
   uncompletedCount: number
 }
 
-export const useStoreCrudOperations = (): StoreCrudOperations => {
+export const useStoreCrud = (): StoreCrudOperations => {
   const todos = useAppSelector((state) => state.todo.todos)
   const filter = useAppSelector((state) => state.todo.filter)
   const dispatch = useAppDispatch()
@@ -47,10 +43,9 @@ export const useStoreCrudOperations = (): StoreCrudOperations => {
     }
   }
 
-  const handleFilterChange = (filter: FilterEnum): void => {
-    dispatch(setFilter(filter))
+  const handleFilterChange = (filt: FilterEnum): void => {
+    dispatch(setFilter(filt))
   }
-
 
   const [filteredTodos, setFilteredTodos] = useState<Todo[]>(todos)
 

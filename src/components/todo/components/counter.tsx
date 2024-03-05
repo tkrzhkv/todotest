@@ -1,9 +1,9 @@
-import { Text, VStack } from "@chakra-ui/react"
-import React from "react"
-import { useStoreCrudOperations } from "@components/todo/hooks/useStoreCrudOperations"
+import { Text, VStack } from '@chakra-ui/react'
+import React, { FC } from 'react'
+import { useStoreCrud } from '@components/todo/hooks/use-store-crud'
 
-export default function TodoCounter():JSX.Element {
-  const { completedCount, uncompletedCount } = useStoreCrudOperations()
+export const TodoCounter:FC = () => {
+  const { completedCount, uncompletedCount } = useStoreCrud()
 
   return (
     <VStack w="full" alignItems="start">

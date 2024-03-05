@@ -1,11 +1,11 @@
-import { Fade } from "react-awesome-reveal"
-import { Button, HStack } from "@chakra-ui/react"
-import React from "react"
-import { useStoreCrudOperations } from "@components/todo/hooks/useStoreCrudOperations"
-import { FilterEnum } from "@constants/filterEnum"
+import { Fade } from 'react-awesome-reveal'
+import { Button, HStack } from '@chakra-ui/react'
+import React, { FC } from 'react'
+import { useStoreCrud } from '@components/todo/hooks/use-store-crud'
+import { FilterEnum } from '@constants/filter-enum'
 
-export default function TodoFilters():JSX.Element {
-  const { handleFilterChange } = useStoreCrudOperations()
+export const TodoFilters: FC = () => {
+  const { handleFilterChange } = useStoreCrud()
 
   return (
     <HStack>

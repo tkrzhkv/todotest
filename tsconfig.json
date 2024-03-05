@@ -24,7 +24,6 @@
       "@hooks/*": ["./hooks/*"],
       "@constants/*": ["./constants/*"],
       "@theme/*": ["./theme/*"],
-      "@types/*": ["./types/*"],
       "@ioc/*": ["./ioc/*"],
       "@pages/*": ["./pages/*"],
       "@utils/*": ["./utils/*"]

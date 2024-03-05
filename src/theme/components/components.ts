@@ -1,8 +1,5 @@
-import { Input } from "@theme/components/Input"
+import { Input } from '@theme/components/input'
 
 export const components = {
   Input,
 }
-
-
-

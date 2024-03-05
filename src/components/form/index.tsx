@@ -1,9 +1,8 @@
-import {FC} from "react"
+import React, { FC } from 'react'
 
-import { FieldValues } from "react-hook-form"
+import { FieldValues } from 'react-hook-form'
+import { FormInput, InputFormProps } from '@components/form/form-input'
 
-import { FormInput, InputFormProps } from "@components/form/FormInput"
-
-export const createInputList = <FVType extends FieldValues>(): { FormInput: FC<InputFormProps<FVType>> } => ({
-  FormInput: FormInput as FC<InputFormProps<FVType>>,
-})
+export const createInputList = <FVType extends FieldValues>():{
+  FormInput: React.FunctionComponent<InputFormProps<FVType>>
+} => ({ 'FormInput': FormInput as FC<InputFormProps<FVType>> })

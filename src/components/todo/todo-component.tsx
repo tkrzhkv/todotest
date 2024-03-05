@@ -1,33 +1,31 @@
-import React, {FC} from "react"
-
-import { Button, HStack, VStack, Text } from "@chakra-ui/react"
-import { Fade } from "react-awesome-reveal"
-import TodoList from "@components/todo/components/todo-list"
-import { useStoreCrudOperations } from "@components/todo/hooks/useStoreCrudOperations"
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { createInputList } from "@components/form"
-import { z } from "zod"
-import TodoFilters from "@components/todo/components/filters"
-import TodoCounter from "@components/todo/components/counter"
+import React, { FC } from 'react'
+import { Button, HStack, VStack, Text } from '@chakra-ui/react'
+import { Fade } from 'react-awesome-reveal'
+import TodoList from '@components/todo/components/todo-list'
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { createInputList } from '@components/form'
+import { z } from 'zod'
+import { useStoreCrud } from '@components/todo/hooks/use-store-crud'
+import { TodoFilters } from '@components/todo/components/filters'
+import { TodoCounter } from '@components/todo/components/counter'
 
 const InputSchema = z.object({
-  task: z
+  'task': z
     .string()
-    .min(3, { message: "Minimum 3 symbols " })
-    .max(10, { message: "Maximum 10 symbols" }),
+    .min(3, { 'message': 'Minimum 3 symbols ' })
+    .max(10, { 'message': 'Maximum 10 symbols' }),
 })
-
+type InputType = z.infer<typeof InputSchema>
 const { FormInput } = createInputList<InputType>()
 
-export type InputType = z.infer<typeof InputSchema>
 export const TodoComponent: FC = () => {
-  const { handleAddTodo } = useStoreCrudOperations()
+  const { handleAddTodo } = useStoreCrud()
 
   const methods = useForm<InputType>({
-    resolver: zodResolver(InputSchema),
-    defaultValues: {
-      task: "",
+    'resolver': zodResolver(InputSchema),
+    'defaultValues': {
+      'task': '',
     },
   })
 
@@ -35,7 +33,7 @@ export const TodoComponent: FC = () => {
     control,
     handleSubmit,
     reset,
-    formState: { errors },
+    'formState': { errors },
   } = methods
 
   const onSubmit: SubmitHandler<InputType> = async (data) => {
